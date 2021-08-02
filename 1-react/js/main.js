@@ -3,7 +3,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      searchKeyWord: "Hello",
+      searchKeyWord: "",
     };
   }
 
@@ -17,6 +17,12 @@ class App extends React.Component {
   }
 
   render() {
+    // let resetButton = null;
+    //
+    // if (this.state.searchKeyWord.length > 0) {
+    //   resetButton = <button type="reset" className="btn-reset"></button>
+    // }
+
     return (
       <>
         <header>
@@ -31,7 +37,9 @@ class App extends React.Component {
               value={this.state.searchKeyWord}
               onChange={event => this.handleChangeInput(event)}
             />
-            <button type="reset" className="btn-reset"></button>
+            {this.state.searchKeyWord.length > 0 ? (
+              <button type="reset" className="btn-reset"></button>
+            ) : null}
           </form>
         </div>
       </>
