@@ -29,7 +29,7 @@ class App extends React.Component {
           <h2 className="container">검색</h2>
         </header>
         <div className="container">
-          <form>식
+          <form>
             <input
               type="text"
               placeholder="검색어를 입력하세요"
@@ -37,9 +37,9 @@ class App extends React.Component {
               value={this.state.searchKeyWord}
               onChange={event => this.handleChangeInput(event)}
             />
-            {this.state.searchKeyWord.length > 0 ? (
+            {this.state.searchKeyWord.length > 0 && (
               <button type="reset" className="btn-reset"></button>
-            ) : null}
+            )}
           </form>
         </div>
       </>
