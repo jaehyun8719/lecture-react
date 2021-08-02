@@ -7,21 +7,25 @@
     <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-<header>
-    <h2 class="container">검색</h2>
-</header>
-<div class="container">
-    <form id="search-form-view">
-        <input type="text" placeholder="검색어를 입력하세요" autofocus />
-        <button type="reset" class="btn-reset"></button>
-    </form>
-    <div class="content">
-        <div id="tab-view"></div>
-        <div id="keyword-list-view"></div>
-        <div id="history-list-view"></div>
-        <div id="search-result-view"></div>
-    </div>
-</div>
-<script type="module" src="./js/main.js"></script>
+<div id="app"></div>
+
+<script
+        crossorigin
+        src="https://unpkg.com/react@17/umd/react.development.js"
+></script>
+
+<script
+        crossorigin
+        src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+></script>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script
+        type="text/babel"
+        data-presets="react"
+        data-type="module"
+        src="js/main.js"
+></script>
 </body>
 </html>
