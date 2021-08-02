@@ -23,7 +23,7 @@ class App extends React.Component {
           <h2 className="container">검색</h2>
         </header>
         <div className="container">
-          <form>
+          <form>식
             <input
               type="text"
               placeholder="검색어를 입력하세요"
