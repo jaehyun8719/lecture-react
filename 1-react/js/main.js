@@ -1,4 +1,5 @@
 import store from "./js/Store.js";
+import { formatRelativeDate } from "./js/helpers.js";
 
 const TabType = {
   KEYWORD: "KEYWORD",
@@ -20,7 +21,18 @@ class App extends React.Component {
       submitted: false,
       selectTab: TabType.KEYWORD,
       keywordList: [],
+      historyList: [],
     };
+  }
+
+  componentDidMount() {
+    const keywordList = store.getKeywordList();
+    const historyList = store.getHistoryList();
+
+    this.setState({
+      keywordList,
+      historyList
+    });
   }
 
   handleSubmit(event) {
@@ -32,9 +44,12 @@ class App extends React.Component {
 
   search(searchKeyWord) {
     const searchResult = store.search(searchKeyWord);
+    const historyList = store.getHistoryList();
+
     this.setState({
       searchKeyWord,
       searchResult,
+      historyList,
       submitted: true,
     });
   }
@@ -53,9 +68,14 @@ class App extends React.Component {
     })
   }
 
-  componentDidMount() {
-    const keywordList = store.getKeywordList();
-    this.setState({ keywordList });
+  handleClickRemoveHistory(event, keyword) {
+    // 버블 이벤트 전파 차단
+    event.stopPropagation();
+    store.removeHistory(keyword);
+    const historyList = store.getHistoryList()
+    this.setState({
+      historyList
+    });
   }
 
   handleChangeInput(event) {
@@ -120,6 +140,20 @@ class App extends React.Component {
       </ul>
     )
 
+    const historyList = (
+      <ul className="list">
+        {this.state.historyList.map((item, index) => {
+          return (
+            <li key={item.id} onClick={() => this.search(item.keyword)}>
+              <span>{item.keyword}</span>
+              <span className="date">{formatRelativeDate(item.date)}</span>
+              <button className="btn-remove" onClick={event => this.handleClickRemoveHistory(event, item.keyword)} ></button>
+            </li>
+          );
+        })}
+      </ul>
+    )
+
     const tabs = (
       <>
         <ul className="tabs">
@@ -136,7 +170,7 @@ class App extends React.Component {
           })}
         </ul>
         {this.state.selectTab === TabType.KEYWORD && keywordList}
-        {this.state.selectTab === TabType.HISTORY && <>TODO: 최근 검색어</>}
+        {this.state.selectTab === TabType.HISTORY && historyList}
       </>
     );
 
