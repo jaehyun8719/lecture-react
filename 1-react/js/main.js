@@ -19,6 +19,7 @@ class App extends React.Component {
       searchResult: [],
       submitted: false,
       selectTab: TabType.KEYWORD,
+      keywordList: [],
     };
   }
 
@@ -29,9 +30,13 @@ class App extends React.Component {
     this.search(this.state.searchKeyWord);
   }
 
-  search(searchKeyword) {
-    const searchResult = store.search(searchKeyword);
-    this.setState({ searchResult });
+  search(searchKeyWord) {
+    const searchResult = store.search(searchKeyWord);
+    this.setState({
+      searchKeyWord,
+      searchResult,
+      submitted: true,
+    });
   }
 
   handleReset() {
@@ -39,12 +44,18 @@ class App extends React.Component {
       () => {
       return {
         searchKeyWord: "",
+        searchResult: [],
         submitted: false,
       }
     },
       () => {
       console.log('TODO: handleReset', this.state.searchKeyWord);
     })
+  }
+
+  componentDidMount() {
+    const keywordList = store.getKeywordList();
+    this.setState({ keywordList });
   }
 
   handleChangeInput(event) {
@@ -96,6 +107,19 @@ class App extends React.Component {
       )
     );
 
+    const keywordList = (
+      <ul className="list">
+        {this.state.keywordList.map((item, index) => {
+          return (
+            <li key={item.id} onClick={() => this.search(item.keyword)}>
+              <span className="number">{index + 1}</span>
+              <span>{item.keyword}</span>
+            </li>
+          )
+        })}
+      </ul>
+    )
+
     const tabs = (
       <>
         <ul className="tabs">
@@ -111,7 +135,7 @@ class App extends React.Component {
             )
           })}
         </ul>
-        {this.state.selectTab === TabType.KEYWORD && <>TODO: 추천 검색어</>}
+        {this.state.selectTab === TabType.KEYWORD && keywordList}
         {this.state.selectTab === TabType.HISTORY && <>TODO: 최근 검색어</>}
       </>
     );
