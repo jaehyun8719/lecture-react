@@ -4,6 +4,7 @@ import SearchForm from './components/SearchForm';
 import SearchResult from './components/searchResult';
 import Store from './js/Store.js'
 import Tabs, { TabType } from './components/Tabs'
+import KeywordList from './components/KeywordList.js'
 
 export default class App extends React.Component {
   constructor(props) {
@@ -62,7 +63,7 @@ export default class App extends React.Component {
                   selectedTab={selectedTab}
                   onChange={(selectedTab) => this.setState({selectedTab})}
                 />
-                {selectedTab === TabType.KEYWORD && <>TODO: 추천 검색어 목록</>}
+                {selectedTab === TabType.KEYWORD && <KeywordList onClick={(keyword) => this.search(keyword)} />}
                 {selectedTab === TabType.HISTORY && <>TODO: 최근 검색어 목록</>}
               </>}
           </div>
